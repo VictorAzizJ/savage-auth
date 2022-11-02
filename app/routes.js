@@ -37,8 +37,9 @@ module.exports = function(app, passport, db) {
     app.put('/messages', (req, res) => {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          thumbUp:req.body.thumbUp + 1
+        $inc: {
+          thumbUp: req.body.thumbUp ? 1:0 ,
+          thumbDown: req.body.thumbUp ? 0:1
         }
       }, {
         sort: {_id: -1},
